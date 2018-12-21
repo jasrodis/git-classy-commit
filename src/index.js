@@ -151,6 +151,13 @@ const main = async () => {
   console.log('\n\n');
   console.log(buildCommit(input));
   
+  // dir = exec("ls -la", function(err, stdout, stderr) {
+  //   if (err) {
+  //     // should have err.code here?  
+  //   }
+  //   console.log(stdout);
+  // });
+  
 };
 
 function buildCommit(input){
