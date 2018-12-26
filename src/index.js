@@ -8,11 +8,18 @@ const collectInputs = async (inputs = []) => {
       type: 'input',
       name: 'issues',
       message: 'Enter the Issue(s) number: ',
-      filter: function (answer) {
-        if(answer.length == 0){
+      filter: function(answer) {
+        if (answer.length == 0) {
           return '';
         }
-        return '[' + answer.split(' ').map(issue => issue = 'Issue #' + issue).join(', ') + ']';
+        return (
+          '[' +
+          answer
+            .split(' ')
+            .map(issue => (issue = 'Issue #' + issue))
+            .join(', ') +
+          ']'
+        );
       }
     },
     {
@@ -33,7 +40,7 @@ const collectInputs = async (inputs = []) => {
           name: '♻️ ci'
         },
         {
-          name: '⚙️ build',
+          name: '⚙️ build'
         },
         {
           name: '📖 docs'
@@ -51,13 +58,13 @@ const collectInputs = async (inputs = []) => {
           name: '🥶 chore'
         }
       ],
-      validate: function (answer) {
+      validate: function(answer) {
         if (answer.length < 1) {
           return 'You must choose at least one type.';
         }
         return true;
       },
-      filter: function (answer) {
+      filter: function(answer) {
         return answer.join(', ');
       }
     },
@@ -65,78 +72,86 @@ const collectInputs = async (inputs = []) => {
       type: 'input',
       name: 'scope',
       message: 'Enter scope: ',
-      filter: function (answer) {
-        if(answer.length == 0){
+      filter: function(answer) {
+        if (answer.length == 0) {
           return '';
         }
-        return '('+answer+')';
+        return '(' + answer + ')';
       }
     },
     {
       type: 'confirm',
       name: 'wip',
       message: 'Work in progress? ',
-      transform: function (answer) {
-        return answer = "input ? 'WIP' : '';"
+      transform: function(answer) {
+        return (answer = "input ? 'WIP' : '';");
       }
     },
     {
       type: 'input',
       name: 'subject',
       message: 'Enter subject: ',
-      filter: function (answer) {
+      filter: function(answer) {
         var res = answer.charAt(0).toLowerCase() + answer.substr(1);
-        if (res.charAt(res.length-1) == "." ){
-          res = res.replace(/.$/,'');
-        }       
+        if (res.charAt(res.length - 1) == '.') {
+          res = res.replace(/.$/, '');
+        }
         return res;
       },
-      validate: function (answer) {
+      validate: function(answer) {
         if (answer.length > 72) {
           return 'You must use less that 72 characters!';
         }
         return true;
-      },
+      }
     },
     {
       type: 'input',
       name: 'message',
-      message: 'Enter message: ',
+      message: 'Enter message: '
     },
     {
       type: 'input',
       name: 'refs',
       message: 'Enter the References number: ',
-      filter: function (answer) {
-        if(answer.length == 0){
+      filter: function(answer) {
+        if (answer.length == 0) {
           return '';
         }
-        return answer.split(' ').map(issue => issue = 'Ref #' + issue).join(', ');
+        return answer
+          .split(' ')
+          .map(issue => (issue = 'Ref #' + issue))
+          .join(', ');
       }
     },
     {
       type: 'input',
       name: 'closes',
       message: 'Enter the Closes number: ',
-      filter: function (answer) {
-        if(answer.length == 0){
+      filter: function(answer) {
+        if (answer.length == 0) {
           return '';
         }
-        return  answer.split(' ').map(issue => issue = 'Closes #' + issue).join(', ');
+        return answer
+          .split(' ')
+          .map(issue => (issue = 'Closes #' + issue))
+          .join(', ');
       }
     },
     {
       type: 'input',
       name: 'reopens',
       message: 'Enter the Reopens number: ',
-      filter: function (answer) {
-        if(answer.length == 0){
+      filter: function(answer) {
+        if (answer.length == 0) {
           return '';
         }
-        return answer.split(' ').map(issue => issue = 'Reopens #' + issue).join(', ');
+        return answer
+          .split(' ')
+          .map(issue => (issue = 'Reopens #' + issue))
+          .join(', ');
       }
-    },
-    
+    }
   ];
 
   const { again, ...answers } = await inquirer.prompt(prompts);
@@ -150,31 +165,29 @@ const main = async () => {
   var input = inputs[0];
   console.log('\n\n');
   console.log(buildCommit(input));
-  
+
   // dir = exec("ls -la", function(err, stdout, stderr) {
   //   if (err) {
-  //     // should have err.code here?  
+  //     // should have err.code here?
   //   }
   //   console.log(stdout);
   // });
-  
 };
 
-function buildCommit(input){
+function buildCommit(input) {
   var res = input['issues'] + ' ' + input['type'] + ': ';
   res = res + (input['wip'] ? 'WIP ' : '');
   res = res + input['subject'];
   res = res + '\n\n';
-  res = res + input['message']
+  res = res + input['message'];
   res = res + '\n\n';
-  res = res + input['refs']
+  res = res + input['refs'];
   res = res + '\n';
-  res = res + input['closes']
+  res = res + input['closes'];
   res = res + '\n';
-  res = res + input['reopens']
+  res = res + input['reopens'];
   return res;
 }
-
 
 /* 
 [Issue-Code-17, Issue-Code-29] fix: WIP for e-signature return error, change payload for upload docs
