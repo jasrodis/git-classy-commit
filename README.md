@@ -1,6 +1,8 @@
 # Git classy commit 
-* Work in progress! 
+* git commit based on conventions: https://medium.com/@nmpegetis/git-commit-message-conventions-841d6998fc4f
 
+
+* Work in progress! 
 
 ## Usage
 
